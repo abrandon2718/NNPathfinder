@@ -5,9 +5,24 @@ Created on Sun Apr 21 20:39:31 2024
 @author: abran
 """
 
-from attacks import Fireball, RayOfFrost, ProduceFlame
+from attacks import Fireball, RayOfFrost, ProduceFlame, KnockdownAttack
 
-class Zwei:
+class Creature:
+    def __init__(self, hp: int, speed: int, ac: int, conditions: list):
+        self.hp = hp
+        self.speed = speed
+        self.ac = ac
+        self.effective_ac = self.ac
+        self.conditions = conditions
+        
+    def take_damage(self, damage):
+        if damage >= self.hp:
+            self.hp = 0
+        else:
+            self.hp -= damage
+        
+
+class Zwei(Creature):
     def __init__(self):
         self.spells = ['fireball', 'ray_of_frost', 'produce_flame']
         self.attacks = [
@@ -28,13 +43,16 @@ class Zwei:
             'spell': 16,
             'melee': 13
             }
+        self.conditions = []
+        
         
 
-class Triceratops:
+class Triceratops(Creature):
     def __init__(self):
         self.spells = ['fireball', 'ray_of_frost', 'produce_flame']
+        self.modifier = 9
         self.attacks = [
-                        
+                        (KnockdownAttack('horns', damage_die=8, damage_die_count=2, area=0, reach=15, modifier=self.modifier))
                         ]
         self.speed = 30
         self.hp = 140
@@ -46,6 +64,5 @@ class Triceratops:
         self.to_hit = {
             'melee': 19
             }
-        self.modifier = 4
-        
+        self.conditions = []
         
