@@ -7,17 +7,17 @@ Created on Sun Apr 21 20:42:23 2024
 
 from dataclasses import dataclass
 from random import randint
-from conditions import PersistentDamage
+from .conditions import PersistentDamage
 
 @dataclass
 class Attack:
     name: str
-    kind: str
     damage_die: int
     damage_die_count: int
     area: int
     reach: int
     modifier: int
+    kind: str
     
     
     def damage(self):

@@ -5,7 +5,8 @@ Created on Sun Apr 21 20:39:31 2024
 @author: abran
 """
 
-from attacks import Fireball, RayOfFrost, ProduceFlame, KnockdownAttack
+from .attacks import Fireball, RayOfFrost, ProduceFlame, KnockdownAttack
+from .conditions import PersistentDamage
 
 class Creature:
     def __init__(self, hp: int, speed: int, ac: int, conditions: list):
@@ -66,3 +67,17 @@ class Triceratops(Creature):
             }
         self.conditions = []
         
+def evaluate_condition(creature: Creature):
+    if not creature.conditions:
+        return
+    for con in creature.conditions:
+        if isinstance(con, PersistentDamage):
+            creature.take_damage(con.damage_tick())
+            
+            if con.remove_persistence():
+                creature.conditions.remove(con)
+                
+            continue
+        if isinstance(con, str):
+            if con == 'prone':
+                creature.effective_ac = creature.ac - 2
