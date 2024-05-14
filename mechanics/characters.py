@@ -9,12 +9,13 @@ from .attacks import Fireball, RayOfFrost, ProduceFlame, KnockdownAttack
 from .conditions import PersistentDamage
 
 class Creature:
-    def __init__(self, hp: int, speed: int, ac: int, conditions: list):
+    def __init__(self, hp: int = 0, speed: int = 0, ac: int = 0, conditions: list = []):
         self.hp = hp
         self.speed = speed
         self.ac = ac
         self.effective_ac = self.ac
         self.conditions = conditions
+        self.coords = [0,0]
         
     def take_damage(self, damage):
         if damage >= self.hp:
@@ -25,6 +26,7 @@ class Creature:
 
 class Zwei(Creature):
     def __init__(self):
+        super().__init__()
         self.spells = ['fireball', 'ray_of_frost', 'produce_flame']
         self.attacks = [
                         (Fireball(rank=4), 3),
@@ -50,7 +52,8 @@ class Zwei(Creature):
 
 class Triceratops(Creature):
     def __init__(self):
-        self.spells = ['fireball', 'ray_of_frost', 'produce_flame']
+        super().__init__()
+        self.spells = []
         self.modifier = 9
         self.attacks = [
                         (KnockdownAttack('horns', damage_die=8, damage_die_count=2, area=0, reach=15, modifier=self.modifier))
