@@ -27,6 +27,8 @@ class Creature:
 class Zwei(Creature):
     def __init__(self):
         super().__init__()
+        self.name = 'Zwei'
+        self.grid_string = 'a'
         self.spells = ['fireball', 'ray_of_frost', 'produce_flame']
         self.attacks = [
                         (Fireball(rank=4), 3),
@@ -41,6 +43,10 @@ class Zwei(Creature):
         self.speed = 30
         self.hp = 72
         self.ac = 23
+        self.fortitude = 11
+        self.reflex = 13
+        self.will = 16
+        self.effective_ac = self.ac
         self.spell_dc = 26
         self.to_hit = {
             'spell': 16,
@@ -53,6 +59,8 @@ class Zwei(Creature):
 class Triceratops(Creature):
     def __init__(self):
         super().__init__()
+        self.name = 'Triceratops'
+        self.grid_string = 'e'
         self.spells = []
         self.modifier = 9
         self.attacks = [
@@ -61,6 +69,7 @@ class Triceratops(Creature):
         self.speed = 30
         self.hp = 140
         self.ac = 26
+        self.effective_ac = self.ac
         self.fortitude = 18
         self.reflex = 12
         self.will = 14

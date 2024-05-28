@@ -18,6 +18,7 @@ class Attack:
     reach: int
     modifier: int
     kind: str
+    defense: str
     
     
     def damage(self):
@@ -39,6 +40,7 @@ class Fireball(Attack):
     area: int = 20
     reach: int = 500
     modifier: int = 0
+    defense: str = 'r'
 
 @dataclass    
 class RayOfFrost(Attack):
@@ -50,6 +52,7 @@ class RayOfFrost(Attack):
     area: int = 20
     reach: int = 500
     modifier: int = 1
+    defense: str = 'a'
     
 @dataclass    
 class ProduceFlame(Attack):
@@ -61,6 +64,7 @@ class ProduceFlame(Attack):
     area: int = 20
     reach: int = 500
     modifier: int = 1
+    defense: str = 'a'
     
     def critical_damage(self):
         return {'damage': self.damage()*2, 'effect': PersistentDamage(10,self.rank)}
@@ -68,6 +72,7 @@ class ProduceFlame(Attack):
 @dataclass
 class KnockdownAttack(Attack):
     kind: str = 'melee'
+    defense: str = 'a'
 
     def damage(self):
         total = 0
