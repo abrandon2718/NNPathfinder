@@ -83,12 +83,14 @@ class BattleGrid:
             if c.name == name:
                 self.creatures.pop(index)
                 self.grid[c.coords[0]][c.coords[1]] = 0
+                return
         raise ValueError(f'{name} does not exist in list of creatures!')
                 
     
     def update_creatures(self):
         for c in self.creatures:
             if c.hp == 0:
+                print(f'{c.name} is dead!')
                 self.remove_creature(c.name)
     
     def check_inbounds(self, creature: Creature):

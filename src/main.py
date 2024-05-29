@@ -7,6 +7,7 @@ Created on Sat May 11 23:50:23 2024
 
 from mechanics.characters import Zwei, Triceratops, evaluate_condition
 from mechanics.conditions import PersistentDamage
+from mechanics.resolution import resolve_attack
 
 from pfnn.pathfinder_environment import BattleGrid
 from visuals.drawing import draw_map, draw_grid
@@ -28,6 +29,7 @@ def initialize_game():
 
 def game_loop(surface, grid: BattleGrid):
     z = grid.get_creature('Zwei')
+    t = grid.get_creature('Triceratops')
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -38,8 +40,11 @@ def game_loop(surface, grid: BattleGrid):
                     pg.quit()
                     sys.exit()
         move = [randint(0, 7)]
-        sleep(0.3)
+        sleep(0.5)
         grid.move_creature_movelist(z, move)
+        if len(grid.creatures) > 1:
+            resolve_attack(z, t, z.attacks[1][0])
+            grid.update_creatures()
         draw_map(surface, grid)
         draw_grid(surface, grid)
         pg.display.update()
@@ -49,6 +54,7 @@ def main():
     zwei = Zwei()
     zwei.coords = [20,20]
     print(f'Zwei starting HP: {zwei.hp}')
+    print(zwei.attacks[1][0].name)
     
     enemy = Triceratops()
     enemy.coords = [5,5]

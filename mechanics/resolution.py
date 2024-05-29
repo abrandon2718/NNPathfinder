@@ -26,4 +26,55 @@ def resolve_attack(attacker: Creature, defender: Creature, attack: Attack):
     
     if attack.kind == 'spell':
         crit = False
+        if attack.defense == 'a':
+            roll = attacker.to_hit['spell'] + randint(1, 20)
+            if roll >= defender.effective_ac:
+                if roll >= defender.ac+10:
+                    defender.take_damage(attack.critical_damage())
+                    print(f'Crit! Defender HP: {defender.hp}')
+                    crit = True
+                if not crit:
+                    defender.take_damage(attack.damage())
+                    print(f'Hit! Defender HP: {defender.hp}')
+        elif attack.defense == 'r':
+            roll = defender.reflex + randint(1, 20)
+            if roll <= attacker.spell_dc:
+                if roll <= attacker.spell_dc-10:
+                    crit = True
+                    defender.take_damage(attack.critical_damage())
+                if not crit:
+                    defender.take_damage(attack.damage())
+            if roll >= attacker.spell_dc:
+                if roll >= attacker.spell_dc+10:
+                    crit = True
+                if not crit:
+                    defender.take_damage(int(attack.damage()/2))
+                    
+        elif attack.defense == 'w':
+            roll = defender.will + randint(1, 20)
+            if roll <= attacker.spell_dc:
+                if roll <= attacker.spell_dc-10:
+                    crit = True
+                    defender.take_damage(attack.critical_damage())
+                if not crit:
+                    defender.take_damage(attack.damage())
+            if roll >= attacker.spell_dc:
+                if roll >= attacker.spell_dc+10:
+                    crit = True
+                if not crit:
+                    defender.take_damage(int(attack.damage()/2))
+                    
+        elif attack.defense == 'f':
+            roll = defender.fortitude + randint(1, 20)
+            if roll <= attacker.spell_dc:
+                if roll <= attacker.spell_dc-10:
+                    crit = True
+                    defender.take_damage(attack.critical_damage())
+                if not crit:
+                    defender.take_damage(attack.damage())
+            if roll >= attacker.spell_dc:
+                if roll >= attacker.spell_dc+10:
+                    crit = True
+                if not crit:
+                    defender.take_damage(int(attack.damage()/2))
         

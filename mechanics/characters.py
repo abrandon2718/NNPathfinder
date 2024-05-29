@@ -18,10 +18,18 @@ class Creature:
         self.coords = [0,0]
         
     def take_damage(self, damage):
-        if damage >= self.hp:
-            self.hp = 0
+        if isinstance(damage, dict):
+            self.conditions.append(damage['effect'])
+            dam = damage['damage']
+            if dam >= self.hp:
+                self.hp = 0
+            else:
+                self.hp -= dam
         else:
-            self.hp -= damage
+            if damage >= self.hp:
+                self.hp = 0
+            else:
+                self.hp -= damage
         
 
 class Zwei(Creature):
