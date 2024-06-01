@@ -43,7 +43,9 @@ def game_loop(surface, grid: BattleGrid):
         sleep(0.5)
         grid.move_creature_movelist(z, move)
         if len(grid.creatures) > 1:
-            resolve_attack(z, t, z.attacks[1][0])
+            resolve_attack(z, t, z.attacks[2][0])
+            for c in grid.creatures:
+                evaluate_condition(c)
             grid.update_creatures()
         draw_map(surface, grid)
         draw_grid(surface, grid)
@@ -54,7 +56,9 @@ def main():
     zwei = Zwei()
     zwei.coords = [20,20]
     print(f'Zwei starting HP: {zwei.hp}')
-    print(zwei.attacks[1][0].name)
+    print(zwei.attacks[2][0].name)
+    print(zwei.attacks[2][0].rank)
+    print(zwei.attacks[2][0].damage_die_count)
     
     enemy = Triceratops()
     enemy.coords = [5,5]

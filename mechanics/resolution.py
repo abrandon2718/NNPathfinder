@@ -77,4 +77,42 @@ def resolve_attack(attacker: Creature, defender: Creature, attack: Attack):
                     crit = True
                 if not crit:
                     defender.take_damage(int(attack.damage()/2))
+
+class Turn:
+    def __init__(self, creature: Creature, moves = None, attacks = None):
+        self.creature = creature
+        self.moves = None
+        self.attacks = None
+        
+    def validate_turn(self):
+        action_count = 0
+        if self.moves:
+            if isinstance(self.moves[0], list):
+                for m in self.moves:
+                    action_count+=1
+            else:
+                action_count+=1
+            assert action_count < 3, 'Only 3 actions allowed per turn'
+        if self.attacks:
+            pass
+            
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
         

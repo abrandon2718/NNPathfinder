@@ -54,6 +54,9 @@ class RayOfFrost(Attack):
     modifier: int = 1
     defense: str = 'a'
     
+    def __post_init__(self):
+        self.damage_die_count = self.rank
+    
 @dataclass    
 class ProduceFlame(Attack):
     name: str = 'produce_flame'
@@ -66,8 +69,11 @@ class ProduceFlame(Attack):
     modifier: int = 1
     defense: str = 'a'
     
+    def __post_init__(self):
+        self.damage_die_count = self.rank
+    
     def critical_damage(self):
-        return {'damage': self.damage()*2, 'effect': PersistentDamage(10,self.rank)}
+        return {'damage': self.damage()*2, 'effect': PersistentDamage(4,self.rank,15)}
     
 @dataclass
 class KnockdownAttack(Attack):

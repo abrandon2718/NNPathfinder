@@ -18,6 +18,7 @@ class PersistentDamage:
         total = 0
         for i in range(self.damage_die_count):
             total += randint(1, self.damage_die)
+        print(f'Damage tick: {total}')
         return total
     
     def remove_persistence(self):
